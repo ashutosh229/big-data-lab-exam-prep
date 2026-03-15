@@ -1,0 +1,4 @@
+com/iitbh/bigdata/AvgTemperatureReducer.class
+com/iitbh/bigdata/AvgTemperatureMapper.class
+com/iitbh/bigdata/AvgTemperatureCombiner.class
+com/iitbh/bigdata/AvgTemperatureDriver.class

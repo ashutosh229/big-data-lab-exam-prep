@@ -1,0 +1,4 @@
+/home/user/Desktop/Big_Data_Lab_Exam/lab_questions/avg-temperature/src/main/java/com/iitbh/bigdata/AvgTemperatureDriver.java
+/home/user/Desktop/Big_Data_Lab_Exam/lab_questions/avg-temperature/src/main/java/com/iitbh/bigdata/AvgTemperatureReducer.java
+/home/user/Desktop/Big_Data_Lab_Exam/lab_questions/avg-temperature/src/main/java/com/iitbh/bigdata/AvgTemperatureCombiner.java
+/home/user/Desktop/Big_Data_Lab_Exam/lab_questions/avg-temperature/src/main/java/com/iitbh/bigdata/AvgTemperatureMapper.java
