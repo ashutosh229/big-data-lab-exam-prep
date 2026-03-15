@@ -1,0 +1,17 @@
+data migration: 
+hdfs dfs -mkdir /mapper-join
+hdfs dfs -put logs.txt /mapper-join
+hdfs dfs -put users.txt /mapper-join    
+
+running the job:  
+hadoop jar mapper-side-join-1.0-SNAPSHOT.jar \
+com.iitbh.bigdata.MapperSideJoinDriver \
+/mapper-join/logs.txt \
+/mapper-output \
+/mapper-join/users.txt  
+
+checking output: 
+hdfs dfs -cat /mapper-output/part-m-00000
+
+
+

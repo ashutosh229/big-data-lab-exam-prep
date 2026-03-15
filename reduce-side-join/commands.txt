@@ -1,0 +1,14 @@
+data migration: 
+hdfs dfs -mkdir /join-input
+hdfs dfs -put logs.txt /join-input
+hdfs dfs -put users.txt /join-input
+
+running job: 
+hadoop jar reduce-side-join-1.0-SNAPSHOT.jar \
+com.iitbh.bigdata.ReduceSideJoinDriver \
+/join-input/logs.txt \
+/join-input/users.txt \
+/join-output
+
+checking result: 
+hdfs dfs -cat /join-output/part-r-00000 
