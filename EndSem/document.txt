@@ -1,0 +1,129 @@
+sudo docker compose -f basic-hadoop-docker-compose.yaml pull - pull the images
+sudo docker compose -f basic-hadoop-docker-compose.yaml up - start the cluster    
+docker - compose -f docker - compose - lab1 . yml down -stopping the cluster 
+docker ps - see the containers running  
+docker exec - it namenode bash - accessing the shell of container
+exit
+--------------------   
+hdfs dfs - ls /
+hdfs dfs -mkdir -p /user/student 
+echo " Hello Hadoop World " > hello . txt
+hdfs dfs - put hello . txt / user / student / 
+hdfs dfs - cat / user / student / hello . txt
+hdfs fsck / user / student / hello . txt - files - blocks - locations
+hdfs dfs - setrep -w 2 / user / student / hello . txt - changing the replication factor    
+------------------------ 
+solving question:  
+1. create the maven project: 
+mvn archetype:generate \                     
+-DgroupId=com.iitbh.bigdata \
+-DartifactId=max-temperature \
+-DarchetypeArtifactId=maven-archetype-quickstart \
+-DinteractiveMode=false 
+2. change the pom file
+3. go and configure the input data in the hdfs system in the namenode shell  
+4. write the code for all the classes in the src  
+5. mvn clean package 
+6. ls target/classes/com/iitbh/bigdata
+7. sudo docker cp target/max-temperature-1.0-SNAPSHOT.jar namenode:/root/ 
+8. hadoop jar /root/max-temperature-1.0-SNAPSHOT.jar com.iitbh.bigdata.MaxTemperatureDriver /max-temperature /output  
+9. hdfs dfs -cat /output/part-r-00000 
+
+extensions: 
+Java: Clean Java Language Server Workspace 
+mvn clean compile 
+Maven: Reload Project  
+
+cleaning dataset: 
+tail -n +3 4258247.txt > dataset.txt  
+
+
+
+
+========== End Sems Exam  
+starting docker: 
+pulling images
+sudo docker pull amitkumardhar/bigdata-namenode-scala:1.0
+sudo docker pull mrugankray/datanode-python:1.0
+sudo docker pull mrugankray/resourcemanager-python:1.0
+sudo docker pull mrugankray/nodemanager-python:1.0
+sudo docker pull bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+
+starting cluster: 
+sudo docker compose -f basic-scala-hadoop-docker-compose.yaml up  
+
+steps to solve the question: 
+1. understand problem statement 
+2. decide api on the basis of data given and if not sure, then use dataframe 
+3. design the solution
+4. sbt new scala/hello-world.g8 or sbt new scala/scala-seed.g8
+cd hello-world
+5. libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.5.1" 
+6. cd src/main/scala/Main.scala 
+7. write the driver code 
+8. sbt clean package  
+9. sudo docker cp target/scala-2.12/*.jar namenode:/root/  
+10. copy the input files also to docker in some location, preferrably the root  
+sudo docker cp file_name namenode:/root/
+11. copy the input files to the hdfs cluster using the hdfs dfs -mkdir -p /user/root  
+hdfs dfs -put logs.txt /user/root/
+11. sudo docker exec -it namenode bash  
+12. spark-submit \
+  --class Main \
+  --master yarn \
+  --deploy-mode client \
+  your-jar-file.jar 
+  
+  alternate method: 
+  nano Main.scala  
+  write the code 
+  scalac -classpath $(echo $SPARK_HOME/jars/*.jar | tr ' ' ':') Main.scala
+  jar -cvf error-log.jar *.class 
+
+Concepts:
+========== 
+1. data loading functions:  
+- sc.textFile("/user/root/logs.txt")   
+- sc.parallelize(List(1, 2, 3, 4, 5, 6)) 
+- output.saveAsTextFile("location") 
+- unionRDD.coalesce(1).saveAsTextFile("/user/root/output_union")
+
+2. transformations 
+- logsRDD.filter(line => line.contains("ERROR")) - returns the filtered entity
+- data.map(entry=>) - returns the new values where each value is a mapped of the original value i.e. this is not a map but an RDD only  
+- parsedRDD.mapValues(value=>valueMapper) - maps only the values 
+- data..reduceByKey{} - it merges the results for the same key on the basis of some function 
+- rdd1.union(rdd2)  
+- rdd1.union(rdd2).distinct() 
+- rdd1.intersection(rdd2) 
+
+3. actions 
+- evenNums.collect() - converts to array or list 
+- errorRDD.count() - counts the total item in the iterable
+- errorLogs.foreach() - iterates on the list
+ 
+4. others: 
+- val start1 = System.currentTimeMillis()  
+- 
+  
+
+
+
+
+
+todo:
+word count
+sql joins ka dekhna hain 
+broadcast joins 
+window functions   
+query optimization and execution plans    
+rdds to dataframes
+
+
+
+
+
+
+
+
+
